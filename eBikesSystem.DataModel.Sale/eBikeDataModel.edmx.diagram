@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="54f3e08f45ca439d811cfc3ed9938295" Name="Diagram1">
+        <EntityTypeShape EntityType="eBikeModel.Sales.ByPayment" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="eBikeModel.Sales.Employee" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="eBikeModel.Sales.PartCategory" Width="1.5" PointX="3" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="eBikeModel.Sales.Part" Width="1.5" PointX="5.25" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="eBikeModel.Sales.PaymentType" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="eBikeModel.Sales.PositionCode" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="eBikeModel.Sales.SaleDetail" Width="1.5" PointX="7.5" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="eBikeModel.Sales.SaleReturnDetail" Width="1.5" PointX="12.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="eBikeModel.Sales.SaleReturn" Width="1.5" PointX="10.5" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="eBikeModel.Sales.Sale" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <AssociationConnector Association="eBikeModel.Sales.FK_ByPaymentPaymentType_PaymentTypeCode" ManuallyRouted="false" />
+        <AssociationConnector Association="eBikeModel.Sales.FK_SalesByPayment_ByPaymentNumber" ManuallyRouted="false" />
+        <AssociationConnector Association="eBikeModel.Sales.FK_SaleReturnsEmployees_EmployeeNumber" ManuallyRouted="false" />
+        <AssociationConnector Association="eBikeModel.Sales.FK_SalesEmployees_EmployeeNumber" ManuallyRouted="false" />
+        <AssociationConnector Association="eBikeModel.Sales.FX_EmployeesPositionCodes_PositionCode" ManuallyRouted="false" />
+        <AssociationConnector Association="eBikeModel.Sales.FK_PartsPartCategories_CategoryType" ManuallyRouted="false" />
+        <AssociationConnector Association="eBikeModel.Sales.PK_SaleDetailsParts_PartNumber" ManuallyRouted="false" />
+        <AssociationConnector Association="eBikeModel.Sales.PK_SalesReturnDetailsParts_PartNumber" ManuallyRouted="false" />
+        <AssociationConnector Association="eBikeModel.Sales.FK_SaleDetailsSales_SaleNumber" ManuallyRouted="false" />
+        <AssociationConnector Association="eBikeModel.Sales.FK_SaleReturnDetailsSaleReturns_SaleReturnNumber" ManuallyRouted="false" />
+        <AssociationConnector Association="eBikeModel.Sales.FK_SaleReturnsSales_SaleNumber" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

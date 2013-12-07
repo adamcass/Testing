@@ -1,0 +1,753 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="eBikeModel.Sales.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="eBikeModelSalesStoreContainer">
+          <EntitySet Name="ByPayment" EntityType="eBikeModel.Sales.Store.ByPayment" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Employees" EntityType="eBikeModel.Sales.Store.Employees" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PartCategories" EntityType="eBikeModel.Sales.Store.PartCategories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Parts" EntityType="eBikeModel.Sales.Store.Parts" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PaymentType" EntityType="eBikeModel.Sales.Store.PaymentType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PositionCodes" EntityType="eBikeModel.Sales.Store.PositionCodes" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SaleDetails" EntityType="eBikeModel.Sales.Store.SaleDetails" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SaleReturnDetails" EntityType="eBikeModel.Sales.Store.SaleReturnDetails" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SaleReturns" EntityType="eBikeModel.Sales.Store.SaleReturns" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Sales" EntityType="eBikeModel.Sales.Store.Sales" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_ByPaymentPaymentType_PaymentTypeCode" Association="eBikeModel.Sales.Store.FK_ByPaymentPaymentType_PaymentTypeCode">
+            <End Role="PaymentType" EntitySet="PaymentType" />
+            <End Role="ByPayment" EntitySet="ByPayment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PartsPartCategories_CategoryType" Association="eBikeModel.Sales.Store.FK_PartsPartCategories_CategoryType">
+            <End Role="PartCategories" EntitySet="PartCategories" />
+            <End Role="Parts" EntitySet="Parts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaleDetailsSales_SaleNumber" Association="eBikeModel.Sales.Store.FK_SaleDetailsSales_SaleNumber">
+            <End Role="Sales" EntitySet="Sales" />
+            <End Role="SaleDetails" EntitySet="SaleDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaleReturnDetailsSaleReturns_SaleReturnNumber" Association="eBikeModel.Sales.Store.FK_SaleReturnDetailsSaleReturns_SaleReturnNumber">
+            <End Role="SaleReturns" EntitySet="SaleReturns" />
+            <End Role="SaleReturnDetails" EntitySet="SaleReturnDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaleReturnsEmployees_EmployeeNumber" Association="eBikeModel.Sales.Store.FK_SaleReturnsEmployees_EmployeeNumber">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="SaleReturns" EntitySet="SaleReturns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaleReturnsSales_SaleNumber" Association="eBikeModel.Sales.Store.FK_SaleReturnsSales_SaleNumber">
+            <End Role="Sales" EntitySet="Sales" />
+            <End Role="SaleReturns" EntitySet="SaleReturns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesByPayment_ByPaymentNumber" Association="eBikeModel.Sales.Store.FK_SalesByPayment_ByPaymentNumber">
+            <End Role="ByPayment" EntitySet="ByPayment" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesEmployees_EmployeeNumber" Association="eBikeModel.Sales.Store.FK_SalesEmployees_EmployeeNumber">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FX_EmployeesPositionCodes_PositionCode" Association="eBikeModel.Sales.Store.FX_EmployeesPositionCodes_PositionCode">
+            <End Role="PositionCodes" EntitySet="PositionCodes" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="PK_SaleDetailsParts_PartNumber" Association="eBikeModel.Sales.Store.PK_SaleDetailsParts_PartNumber">
+            <End Role="Parts" EntitySet="Parts" />
+            <End Role="SaleDetails" EntitySet="SaleDetails" />
+          </AssociationSet>
+          <AssociationSet Name="PK_SalesReturnDetailsParts_PartNumber" Association="eBikeModel.Sales.Store.PK_SalesReturnDetailsParts_PartNumber">
+            <End Role="Parts" EntitySet="Parts" />
+            <End Role="SaleReturnDetails" EntitySet="SaleReturnDetails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ByPayment">
+          <Key>
+            <PropertyRef Name="ByPaymentNumber" />
+          </Key>
+          <Property Name="ByPaymentNumber" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PaymentTypeCode" Type="int" Nullable="false" />
+          <Property Name="CardNumber" Type="char" MaxLength="16" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeNumber" />
+          </Key>
+          <Property Name="EmployeeNumber" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SocialInsuranceNumber" Type="char" Nullable="false" MaxLength="9" />
+          <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="Address" Type="varchar" MaxLength="40" />
+          <Property Name="City" Type="varchar" MaxLength="20" />
+          <Property Name="Province" Type="char" MaxLength="2" />
+          <Property Name="PostalCode" Type="char" MaxLength="6" />
+          <Property Name="HomePhone" Type="char" MaxLength="10" />
+          <Property Name="WorkPhone" Type="char" MaxLength="10" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="30" />
+          <Property Name="PositionCode" Type="char" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'C:\USERS\PPATEL24\DESKTOP\PROJECT\EBIKE LAB - STARTER KIT\EBIKESSYSTEM.DATAMODEL.SALE\EBIKE.MDF.dbo.IDGenerator' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="PartCategories">
+          <Key>
+            <PropertyRef Name="CategoryType" />
+          </Key>
+          <Property Name="CategoryType" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="Description" Type="varchar" Nullable="false" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="Parts">
+          <Key>
+            <PropertyRef Name="PartNumber" />
+          </Key>
+          <Property Name="PartNumber" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="varchar" Nullable="false" MaxLength="40" />
+          <Property Name="PurchasePrice" Type="money" Nullable="false" />
+          <Property Name="SellingPrice" Type="money" Nullable="false" />
+          <Property Name="InStock" Type="int" Nullable="false" />
+          <Property Name="ReorderLevel" Type="int" Nullable="false" />
+          <Property Name="CategoryType" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="Refundable" Type="char" Nullable="false" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="PaymentTypeCode" />
+          </Key>
+          <Property Name="PaymentTypeCode" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="char" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PositionCodes">
+          <Key>
+            <PropertyRef Name="PositionCode" />
+          </Key>
+          <Property Name="PositionCode" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="Description" Type="varchar" Nullable="false" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="SaleDetails">
+          <Key>
+            <PropertyRef Name="SaleNumber" />
+            <PropertyRef Name="PartNumber" />
+          </Key>
+          <Property Name="SaleNumber" Type="int" Nullable="false" />
+          <Property Name="PartNumber" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="SellingPrice" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SaleReturnDetails">
+          <Key>
+            <PropertyRef Name="SaleReturnNumber" />
+            <PropertyRef Name="PartNumber" />
+          </Key>
+          <Property Name="SaleReturnNumber" Type="int" Nullable="false" />
+          <Property Name="PartNumber" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="SellingPrice" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SaleReturns">
+          <Key>
+            <PropertyRef Name="SaleReturnNumber" />
+          </Key>
+          <Property Name="SaleReturnNumber" Type="int" Nullable="false" />
+          <Property Name="ReturnDate" Type="datetime" Nullable="false" />
+          <Property Name="OriginalSaleNumber" Type="int" Nullable="false" />
+          <Property Name="EmployeeNumber" Type="int" Nullable="false" />
+          <Property Name="GST" Type="money" Nullable="false" />
+          <Property Name="Total" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sales">
+          <Key>
+            <PropertyRef Name="SaleNumber" />
+          </Key>
+          <Property Name="SaleNumber" Type="int" Nullable="false" />
+          <Property Name="SaleDate" Type="datetime" Nullable="false" />
+          <Property Name="ByPaymentNumber" Type="int" Nullable="false" />
+          <Property Name="EmployeeNumber" Type="int" Nullable="false" />
+          <Property Name="GST" Type="money" Nullable="false" />
+          <Property Name="Total" Type="money" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ByPaymentPaymentType_PaymentTypeCode">
+          <End Role="PaymentType" Type="eBikeModel.Sales.Store.PaymentType" Multiplicity="1" />
+          <End Role="ByPayment" Type="eBikeModel.Sales.Store.ByPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentType">
+              <PropertyRef Name="PaymentTypeCode" />
+            </Principal>
+            <Dependent Role="ByPayment">
+              <PropertyRef Name="PaymentTypeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PartsPartCategories_CategoryType">
+          <End Role="PartCategories" Type="eBikeModel.Sales.Store.PartCategories" Multiplicity="1" />
+          <End Role="Parts" Type="eBikeModel.Sales.Store.Parts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PartCategories">
+              <PropertyRef Name="CategoryType" />
+            </Principal>
+            <Dependent Role="Parts">
+              <PropertyRef Name="CategoryType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SaleDetailsSales_SaleNumber">
+          <End Role="Sales" Type="eBikeModel.Sales.Store.Sales" Multiplicity="1" />
+          <End Role="SaleDetails" Type="eBikeModel.Sales.Store.SaleDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sales">
+              <PropertyRef Name="SaleNumber" />
+            </Principal>
+            <Dependent Role="SaleDetails">
+              <PropertyRef Name="SaleNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SaleReturnDetailsSaleReturns_SaleReturnNumber">
+          <End Role="SaleReturns" Type="eBikeModel.Sales.Store.SaleReturns" Multiplicity="1" />
+          <End Role="SaleReturnDetails" Type="eBikeModel.Sales.Store.SaleReturnDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaleReturns">
+              <PropertyRef Name="SaleReturnNumber" />
+            </Principal>
+            <Dependent Role="SaleReturnDetails">
+              <PropertyRef Name="SaleReturnNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SaleReturnsEmployees_EmployeeNumber">
+          <End Role="Employees" Type="eBikeModel.Sales.Store.Employees" Multiplicity="1" />
+          <End Role="SaleReturns" Type="eBikeModel.Sales.Store.SaleReturns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeNumber" />
+            </Principal>
+            <Dependent Role="SaleReturns">
+              <PropertyRef Name="EmployeeNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SaleReturnsSales_SaleNumber">
+          <End Role="Sales" Type="eBikeModel.Sales.Store.Sales" Multiplicity="1" />
+          <End Role="SaleReturns" Type="eBikeModel.Sales.Store.SaleReturns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sales">
+              <PropertyRef Name="SaleNumber" />
+            </Principal>
+            <Dependent Role="SaleReturns">
+              <PropertyRef Name="OriginalSaleNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesByPayment_ByPaymentNumber">
+          <End Role="ByPayment" Type="eBikeModel.Sales.Store.ByPayment" Multiplicity="1" />
+          <End Role="Sales" Type="eBikeModel.Sales.Store.Sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ByPayment">
+              <PropertyRef Name="ByPaymentNumber" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="ByPaymentNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesEmployees_EmployeeNumber">
+          <End Role="Employees" Type="eBikeModel.Sales.Store.Employees" Multiplicity="1" />
+          <End Role="Sales" Type="eBikeModel.Sales.Store.Sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeNumber" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="EmployeeNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FX_EmployeesPositionCodes_PositionCode">
+          <End Role="PositionCodes" Type="eBikeModel.Sales.Store.PositionCodes" Multiplicity="0..1" />
+          <End Role="Employees" Type="eBikeModel.Sales.Store.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PositionCodes">
+              <PropertyRef Name="PositionCode" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="PositionCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_SaleDetailsParts_PartNumber">
+          <End Role="Parts" Type="eBikeModel.Sales.Store.Parts" Multiplicity="1" />
+          <End Role="SaleDetails" Type="eBikeModel.Sales.Store.SaleDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parts">
+              <PropertyRef Name="PartNumber" />
+            </Principal>
+            <Dependent Role="SaleDetails">
+              <PropertyRef Name="PartNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_SalesReturnDetailsParts_PartNumber">
+          <End Role="Parts" Type="eBikeModel.Sales.Store.Parts" Multiplicity="1" />
+          <End Role="SaleReturnDetails" Type="eBikeModel.Sales.Store.SaleReturnDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parts">
+              <PropertyRef Name="PartNumber" />
+            </Principal>
+            <Dependent Role="SaleReturnDetails">
+              <PropertyRef Name="PartNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="eBikeModel.Sales" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="eBikeEntitiesSales" p1:LazyLoadingEnabled="true" a:TypeAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+          <EntitySet Name="ByPayments" EntityType="eBikeModel.Sales.ByPayment" />
+          <EntitySet Name="Employees" EntityType="eBikeModel.Sales.Employee" />
+          <EntitySet Name="PartCategories" EntityType="eBikeModel.Sales.PartCategory" />
+          <EntitySet Name="Parts" EntityType="eBikeModel.Sales.Part" />
+          <EntitySet Name="PaymentTypes" EntityType="eBikeModel.Sales.PaymentType" />
+          <EntitySet Name="PositionCodes" EntityType="eBikeModel.Sales.PositionCode" />
+          <EntitySet Name="SaleDetails" EntityType="eBikeModel.Sales.SaleDetail" />
+          <EntitySet Name="SaleReturnDetails" EntityType="eBikeModel.Sales.SaleReturnDetail" />
+          <EntitySet Name="SaleReturns" EntityType="eBikeModel.Sales.SaleReturn" />
+          <EntitySet Name="Sales" EntityType="eBikeModel.Sales.Sale" />
+          <AssociationSet Name="FK_ByPaymentPaymentType_PaymentTypeCode" Association="eBikeModel.Sales.FK_ByPaymentPaymentType_PaymentTypeCode">
+            <End Role="PaymentType" EntitySet="PaymentTypes" />
+            <End Role="ByPayment" EntitySet="ByPayments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesByPayment_ByPaymentNumber" Association="eBikeModel.Sales.FK_SalesByPayment_ByPaymentNumber">
+            <End Role="ByPayment" EntitySet="ByPayments" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaleReturnsEmployees_EmployeeNumber" Association="eBikeModel.Sales.FK_SaleReturnsEmployees_EmployeeNumber">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="SaleReturns" EntitySet="SaleReturns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesEmployees_EmployeeNumber" Association="eBikeModel.Sales.FK_SalesEmployees_EmployeeNumber">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FX_EmployeesPositionCodes_PositionCode" Association="eBikeModel.Sales.FX_EmployeesPositionCodes_PositionCode">
+            <End Role="PositionCodes" EntitySet="PositionCodes" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PartsPartCategories_CategoryType" Association="eBikeModel.Sales.FK_PartsPartCategories_CategoryType">
+            <End Role="PartCategories" EntitySet="PartCategories" />
+            <End Role="Parts" EntitySet="Parts" />
+          </AssociationSet>
+          <AssociationSet Name="PK_SaleDetailsParts_PartNumber" Association="eBikeModel.Sales.PK_SaleDetailsParts_PartNumber">
+            <End Role="Parts" EntitySet="Parts" />
+            <End Role="SaleDetails" EntitySet="SaleDetails" />
+          </AssociationSet>
+          <AssociationSet Name="PK_SalesReturnDetailsParts_PartNumber" Association="eBikeModel.Sales.PK_SalesReturnDetailsParts_PartNumber">
+            <End Role="Parts" EntitySet="Parts" />
+            <End Role="SaleReturnDetails" EntitySet="SaleReturnDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaleDetailsSales_SaleNumber" Association="eBikeModel.Sales.FK_SaleDetailsSales_SaleNumber">
+            <End Role="Sales" EntitySet="Sales" />
+            <End Role="SaleDetails" EntitySet="SaleDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaleReturnDetailsSaleReturns_SaleReturnNumber" Association="eBikeModel.Sales.FK_SaleReturnDetailsSaleReturns_SaleReturnNumber">
+            <End Role="SaleReturns" EntitySet="SaleReturns" />
+            <End Role="SaleReturnDetails" EntitySet="SaleReturnDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaleReturnsSales_SaleNumber" Association="eBikeModel.Sales.FK_SaleReturnsSales_SaleNumber">
+            <End Role="Sales" EntitySet="Sales" />
+            <End Role="SaleReturns" EntitySet="SaleReturns" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ByPayment">
+          <Key>
+            <PropertyRef Name="ByPaymentNumber" />
+          </Key>
+          <Property Name="ByPaymentNumber" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PaymentTypeCode" Type="Int32" Nullable="false" />
+          <Property Name="CardNumber" Type="String" MaxLength="16" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="PaymentType" Relationship="eBikeModel.Sales.FK_ByPaymentPaymentType_PaymentTypeCode" FromRole="ByPayment" ToRole="PaymentType" />
+          <NavigationProperty Name="Sales" Relationship="eBikeModel.Sales.FK_SalesByPayment_ByPaymentNumber" FromRole="ByPayment" ToRole="Sales" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeNumber" />
+          </Key>
+          <Property Name="EmployeeNumber" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="SocialInsuranceNumber" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="Address" Type="String" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="City" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="Province" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="6" Unicode="false" FixedLength="true" />
+          <Property Name="HomePhone" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
+          <Property Name="WorkPhone" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
+          <Property Name="EmailAddress" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="PositionCode" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="SaleReturns" Relationship="eBikeModel.Sales.FK_SaleReturnsEmployees_EmployeeNumber" FromRole="Employees" ToRole="SaleReturns" />
+          <NavigationProperty Name="Sales" Relationship="eBikeModel.Sales.FK_SalesEmployees_EmployeeNumber" FromRole="Employees" ToRole="Sales" />
+          <NavigationProperty Name="PositionCode1" Relationship="eBikeModel.Sales.FX_EmployeesPositionCodes_PositionCode" FromRole="Employees" ToRole="PositionCodes" />
+        </EntityType>
+        <EntityType Name="PartCategory">
+          <Key>
+            <PropertyRef Name="CategoryType" />
+          </Key>
+          <Property Name="CategoryType" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Parts" Relationship="eBikeModel.Sales.FK_PartsPartCategories_CategoryType" FromRole="PartCategories" ToRole="Parts" />
+        </EntityType>
+        <EntityType Name="Part">
+          <Key>
+            <PropertyRef Name="PartNumber" />
+          </Key>
+          <Property Name="PartNumber" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="PurchasePrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="SellingPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="InStock" Type="Int32" Nullable="false" />
+          <Property Name="ReorderLevel" Type="Int32" Nullable="false" />
+          <Property Name="CategoryType" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="Refundable" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="PartCategory" Relationship="eBikeModel.Sales.FK_PartsPartCategories_CategoryType" FromRole="Parts" ToRole="PartCategories" />
+          <NavigationProperty Name="SaleDetails" Relationship="eBikeModel.Sales.PK_SaleDetailsParts_PartNumber" FromRole="Parts" ToRole="SaleDetails" />
+          <NavigationProperty Name="SaleReturnDetails" Relationship="eBikeModel.Sales.PK_SalesReturnDetailsParts_PartNumber" FromRole="Parts" ToRole="SaleReturnDetails" />
+        </EntityType>
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="PaymentTypeCode" />
+          </Key>
+          <Property Name="PaymentTypeCode" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="ByPayments" Relationship="eBikeModel.Sales.FK_ByPaymentPaymentType_PaymentTypeCode" FromRole="PaymentType" ToRole="ByPayment" />
+        </EntityType>
+        <EntityType Name="PositionCode">
+          <Key>
+            <PropertyRef Name="PositionCode1" />
+          </Key>
+          <Property Name="PositionCode1" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Employees" Relationship="eBikeModel.Sales.FX_EmployeesPositionCodes_PositionCode" FromRole="PositionCodes" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="SaleDetail">
+          <Key>
+            <PropertyRef Name="SaleNumber" />
+            <PropertyRef Name="PartNumber" />
+          </Key>
+          <Property Name="SaleNumber" Type="Int32" Nullable="false" />
+          <Property Name="PartNumber" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="SellingPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Part" Relationship="eBikeModel.Sales.PK_SaleDetailsParts_PartNumber" FromRole="SaleDetails" ToRole="Parts" />
+          <NavigationProperty Name="Sale" Relationship="eBikeModel.Sales.FK_SaleDetailsSales_SaleNumber" FromRole="SaleDetails" ToRole="Sales" />
+        </EntityType>
+        <EntityType Name="SaleReturnDetail">
+          <Key>
+            <PropertyRef Name="SaleReturnNumber" />
+            <PropertyRef Name="PartNumber" />
+          </Key>
+          <Property Name="SaleReturnNumber" Type="Int32" Nullable="false" />
+          <Property Name="PartNumber" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="SellingPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Part" Relationship="eBikeModel.Sales.PK_SalesReturnDetailsParts_PartNumber" FromRole="SaleReturnDetails" ToRole="Parts" />
+          <NavigationProperty Name="SaleReturn" Relationship="eBikeModel.Sales.FK_SaleReturnDetailsSaleReturns_SaleReturnNumber" FromRole="SaleReturnDetails" ToRole="SaleReturns" />
+        </EntityType>
+        <EntityType Name="SaleReturn">
+          <Key>
+            <PropertyRef Name="SaleReturnNumber" />
+          </Key>
+          <Property Name="SaleReturnNumber" Type="Int32" Nullable="false" />
+          <Property Name="ReturnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="OriginalSaleNumber" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeNumber" Type="Int32" Nullable="false" />
+          <Property Name="GST" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Employee" Relationship="eBikeModel.Sales.FK_SaleReturnsEmployees_EmployeeNumber" FromRole="SaleReturns" ToRole="Employees" />
+          <NavigationProperty Name="SaleReturnDetails" Relationship="eBikeModel.Sales.FK_SaleReturnDetailsSaleReturns_SaleReturnNumber" FromRole="SaleReturns" ToRole="SaleReturnDetails" />
+          <NavigationProperty Name="Sale" Relationship="eBikeModel.Sales.FK_SaleReturnsSales_SaleNumber" FromRole="SaleReturns" ToRole="Sales" />
+        </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="SaleNumber" />
+          </Key>
+          <Property Name="SaleNumber" Type="Int32" Nullable="false" />
+          <Property Name="SaleDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ByPaymentNumber" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeNumber" Type="Int32" Nullable="false" />
+          <Property Name="GST" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="ByPayment" Relationship="eBikeModel.Sales.FK_SalesByPayment_ByPaymentNumber" FromRole="Sales" ToRole="ByPayment" />
+          <NavigationProperty Name="Employee" Relationship="eBikeModel.Sales.FK_SalesEmployees_EmployeeNumber" FromRole="Sales" ToRole="Employees" />
+          <NavigationProperty Name="SaleDetails" Relationship="eBikeModel.Sales.FK_SaleDetailsSales_SaleNumber" FromRole="Sales" ToRole="SaleDetails" />
+          <NavigationProperty Name="SaleReturns" Relationship="eBikeModel.Sales.FK_SaleReturnsSales_SaleNumber" FromRole="Sales" ToRole="SaleReturns" />
+        </EntityType>
+        <Association Name="FK_ByPaymentPaymentType_PaymentTypeCode">
+          <End Role="PaymentType" Type="eBikeModel.Sales.PaymentType" Multiplicity="1" />
+          <End Role="ByPayment" Type="eBikeModel.Sales.ByPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentType">
+              <PropertyRef Name="PaymentTypeCode" />
+            </Principal>
+            <Dependent Role="ByPayment">
+              <PropertyRef Name="PaymentTypeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesByPayment_ByPaymentNumber">
+          <End Role="ByPayment" Type="eBikeModel.Sales.ByPayment" Multiplicity="1" />
+          <End Role="Sales" Type="eBikeModel.Sales.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ByPayment">
+              <PropertyRef Name="ByPaymentNumber" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="ByPaymentNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SaleReturnsEmployees_EmployeeNumber">
+          <End Role="Employees" Type="eBikeModel.Sales.Employee" Multiplicity="1" />
+          <End Role="SaleReturns" Type="eBikeModel.Sales.SaleReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeNumber" />
+            </Principal>
+            <Dependent Role="SaleReturns">
+              <PropertyRef Name="EmployeeNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesEmployees_EmployeeNumber">
+          <End Role="Employees" Type="eBikeModel.Sales.Employee" Multiplicity="1" />
+          <End Role="Sales" Type="eBikeModel.Sales.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeNumber" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="EmployeeNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FX_EmployeesPositionCodes_PositionCode">
+          <End Role="PositionCodes" Type="eBikeModel.Sales.PositionCode" Multiplicity="0..1" />
+          <End Role="Employees" Type="eBikeModel.Sales.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PositionCodes">
+              <PropertyRef Name="PositionCode1" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="PositionCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PartsPartCategories_CategoryType">
+          <End Role="PartCategories" Type="eBikeModel.Sales.PartCategory" Multiplicity="1" />
+          <End Role="Parts" Type="eBikeModel.Sales.Part" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PartCategories">
+              <PropertyRef Name="CategoryType" />
+            </Principal>
+            <Dependent Role="Parts">
+              <PropertyRef Name="CategoryType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_SaleDetailsParts_PartNumber">
+          <End Role="Parts" Type="eBikeModel.Sales.Part" Multiplicity="1" />
+          <End Role="SaleDetails" Type="eBikeModel.Sales.SaleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parts">
+              <PropertyRef Name="PartNumber" />
+            </Principal>
+            <Dependent Role="SaleDetails">
+              <PropertyRef Name="PartNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_SalesReturnDetailsParts_PartNumber">
+          <End Role="Parts" Type="eBikeModel.Sales.Part" Multiplicity="1" />
+          <End Role="SaleReturnDetails" Type="eBikeModel.Sales.SaleReturnDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parts">
+              <PropertyRef Name="PartNumber" />
+            </Principal>
+            <Dependent Role="SaleReturnDetails">
+              <PropertyRef Name="PartNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SaleDetailsSales_SaleNumber">
+          <End Role="Sales" Type="eBikeModel.Sales.Sale" Multiplicity="1" />
+          <End Role="SaleDetails" Type="eBikeModel.Sales.SaleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sales">
+              <PropertyRef Name="SaleNumber" />
+            </Principal>
+            <Dependent Role="SaleDetails">
+              <PropertyRef Name="SaleNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SaleReturnDetailsSaleReturns_SaleReturnNumber">
+          <End Role="SaleReturns" Type="eBikeModel.Sales.SaleReturn" Multiplicity="1" />
+          <End Role="SaleReturnDetails" Type="eBikeModel.Sales.SaleReturnDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaleReturns">
+              <PropertyRef Name="SaleReturnNumber" />
+            </Principal>
+            <Dependent Role="SaleReturnDetails">
+              <PropertyRef Name="SaleReturnNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SaleReturnsSales_SaleNumber">
+          <End Role="Sales" Type="eBikeModel.Sales.Sale" Multiplicity="1" />
+          <End Role="SaleReturns" Type="eBikeModel.Sales.SaleReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sales">
+              <PropertyRef Name="SaleNumber" />
+            </Principal>
+            <Dependent Role="SaleReturns">
+              <PropertyRef Name="OriginalSaleNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="eBikeModelSalesStoreContainer" CdmEntityContainer="eBikeEntitiesSales">
+          <EntitySetMapping Name="ByPayments">
+            <EntityTypeMapping TypeName="eBikeModel.Sales.ByPayment">
+              <MappingFragment StoreEntitySet="ByPayment">
+                <ScalarProperty Name="ByPaymentNumber" ColumnName="ByPaymentNumber" />
+                <ScalarProperty Name="PaymentTypeCode" ColumnName="PaymentTypeCode" />
+                <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="eBikeModel.Sales.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+                <ScalarProperty Name="SocialInsuranceNumber" ColumnName="SocialInsuranceNumber" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+                <ScalarProperty Name="WorkPhone" ColumnName="WorkPhone" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="PositionCode" ColumnName="PositionCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PartCategories">
+            <EntityTypeMapping TypeName="eBikeModel.Sales.PartCategory">
+              <MappingFragment StoreEntitySet="PartCategories">
+                <ScalarProperty Name="CategoryType" ColumnName="CategoryType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parts">
+            <EntityTypeMapping TypeName="eBikeModel.Sales.Part">
+              <MappingFragment StoreEntitySet="Parts">
+                <ScalarProperty Name="PartNumber" ColumnName="PartNumber" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+                <ScalarProperty Name="InStock" ColumnName="InStock" />
+                <ScalarProperty Name="ReorderLevel" ColumnName="ReorderLevel" />
+                <ScalarProperty Name="CategoryType" ColumnName="CategoryType" />
+                <ScalarProperty Name="Refundable" ColumnName="Refundable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentTypes">
+            <EntityTypeMapping TypeName="eBikeModel.Sales.PaymentType">
+              <MappingFragment StoreEntitySet="PaymentType">
+                <ScalarProperty Name="PaymentTypeCode" ColumnName="PaymentTypeCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PositionCodes">
+            <EntityTypeMapping TypeName="eBikeModel.Sales.PositionCode">
+              <MappingFragment StoreEntitySet="PositionCodes">
+                <ScalarProperty Name="PositionCode1" ColumnName="PositionCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaleDetails">
+            <EntityTypeMapping TypeName="eBikeModel.Sales.SaleDetail">
+              <MappingFragment StoreEntitySet="SaleDetails">
+                <ScalarProperty Name="SaleNumber" ColumnName="SaleNumber" />
+                <ScalarProperty Name="PartNumber" ColumnName="PartNumber" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaleReturnDetails">
+            <EntityTypeMapping TypeName="eBikeModel.Sales.SaleReturnDetail">
+              <MappingFragment StoreEntitySet="SaleReturnDetails">
+                <ScalarProperty Name="SaleReturnNumber" ColumnName="SaleReturnNumber" />
+                <ScalarProperty Name="PartNumber" ColumnName="PartNumber" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaleReturns">
+            <EntityTypeMapping TypeName="eBikeModel.Sales.SaleReturn">
+              <MappingFragment StoreEntitySet="SaleReturns">
+                <ScalarProperty Name="SaleReturnNumber" ColumnName="SaleReturnNumber" />
+                <ScalarProperty Name="ReturnDate" ColumnName="ReturnDate" />
+                <ScalarProperty Name="OriginalSaleNumber" ColumnName="OriginalSaleNumber" />
+                <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+                <ScalarProperty Name="GST" ColumnName="GST" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sales">
+            <EntityTypeMapping TypeName="eBikeModel.Sales.Sale">
+              <MappingFragment StoreEntitySet="Sales">
+                <ScalarProperty Name="SaleNumber" ColumnName="SaleNumber" />
+                <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
+                <ScalarProperty Name="ByPaymentNumber" ColumnName="ByPaymentNumber" />
+                <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+                <ScalarProperty Name="GST" ColumnName="GST" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

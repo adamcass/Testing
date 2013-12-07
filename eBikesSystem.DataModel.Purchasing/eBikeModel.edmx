@@ -1,0 +1,536 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="eBikeModel.Purchasing.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="eBikeModelPurchasingStoreContainer">
+          <EntitySet Name="Employees" EntityType="eBikeModel.Purchasing.Store.Employees" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="IDGenerator" EntityType="eBikeModel.Purchasing.Store.IDGenerator" store:Type="Tables" store:Schema="dbo" store:Name="IDGenerator">
+            <DefiningQuery>SELECT 
+      [IDGenerator].[KeyField] AS [KeyField], 
+      [IDGenerator].[LastValue] AS [LastValue]
+      FROM [dbo].[IDGenerator] AS [IDGenerator]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="OrderDetails" EntityType="eBikeModel.Purchasing.Store.OrderDetails" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Orders" EntityType="eBikeModel.Purchasing.Store.Orders" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PartCategories" EntityType="eBikeModel.Purchasing.Store.PartCategories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Parts" EntityType="eBikeModel.Purchasing.Store.Parts" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PositionCodes" EntityType="eBikeModel.Purchasing.Store.PositionCodes" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_OrderDetailsOrders_OrderNumber" Association="eBikeModel.Purchasing.Store.FK_OrderDetailsOrders_OrderNumber">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdersEmployees_EmployeeNumber" Association="eBikeModel.Purchasing.Store.FK_OrdersEmployees_EmployeeNumber">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PartsPartCategories_CategoryType" Association="eBikeModel.Purchasing.Store.FK_PartsPartCategories_CategoryType">
+            <End Role="PartCategories" EntitySet="PartCategories" />
+            <End Role="Parts" EntitySet="Parts" />
+          </AssociationSet>
+          <AssociationSet Name="FX_EmployeesPositionCodes_PositionCode" Association="eBikeModel.Purchasing.Store.FX_EmployeesPositionCodes_PositionCode">
+            <End Role="PositionCodes" EntitySet="PositionCodes" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="PK_OrderDetailsParts_PartNumber" Association="eBikeModel.Purchasing.Store.PK_OrderDetailsParts_PartNumber">
+            <End Role="Parts" EntitySet="Parts" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeNumber" />
+          </Key>
+          <Property Name="EmployeeNumber" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SocialInsuranceNumber" Type="char" Nullable="false" MaxLength="9" />
+          <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="Address" Type="varchar" MaxLength="40" />
+          <Property Name="City" Type="varchar" MaxLength="20" />
+          <Property Name="Province" Type="char" MaxLength="2" />
+          <Property Name="PostalCode" Type="char" MaxLength="6" />
+          <Property Name="HomePhone" Type="char" MaxLength="10" />
+          <Property Name="WorkPhone" Type="char" MaxLength="10" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="30" />
+          <Property Name="PositionCode" Type="char" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'C:\USERS\ADAM\DOCUMENTS\GITHUB\TEAM-P\EBIKESSYSTEM.DATAMODEL.PURCHASING\EBIKE.MDF.dbo.IDGenerator' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="IDGenerator">
+          <Key>
+            <PropertyRef Name="KeyField" />
+            <PropertyRef Name="LastValue" />
+          </Key>
+          <Property Name="KeyField" Type="char" Nullable="false" MaxLength="25" />
+          <Property Name="LastValue" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="OrderNumber" />
+            <PropertyRef Name="PartNumber" />
+          </Key>
+          <Property Name="OrderNumber" Type="int" Nullable="false" />
+          <Property Name="PartNumber" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="PurchasePrice" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderNumber" />
+          </Key>
+          <Property Name="OrderNumber" Type="int" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" />
+          <Property Name="ReceiveDate" Type="datetime" />
+          <Property Name="GST" Type="money" Nullable="false" />
+          <Property Name="Total" Type="money" Nullable="false" />
+          <Property Name="EmployeeNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PartCategories">
+          <Key>
+            <PropertyRef Name="CategoryType" />
+          </Key>
+          <Property Name="CategoryType" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="Description" Type="varchar" Nullable="false" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="Parts">
+          <Key>
+            <PropertyRef Name="PartNumber" />
+          </Key>
+          <Property Name="PartNumber" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="varchar" Nullable="false" MaxLength="40" />
+          <Property Name="PurchasePrice" Type="money" Nullable="false" />
+          <Property Name="SellingPrice" Type="money" Nullable="false" />
+          <Property Name="InStock" Type="int" Nullable="false" />
+          <Property Name="ReorderLevel" Type="int" Nullable="false" />
+          <Property Name="CategoryType" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="Refundable" Type="char" Nullable="false" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="PositionCodes">
+          <Key>
+            <PropertyRef Name="PositionCode" />
+          </Key>
+          <Property Name="PositionCode" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="Description" Type="varchar" Nullable="false" MaxLength="40" />
+        </EntityType>
+        <Association Name="FK_OrderDetailsOrders_OrderNumber">
+          <End Role="Orders" Type="eBikeModel.Purchasing.Store.Orders" Multiplicity="1" />
+          <End Role="OrderDetails" Type="eBikeModel.Purchasing.Store.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderNumber" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdersEmployees_EmployeeNumber">
+          <End Role="Employees" Type="eBikeModel.Purchasing.Store.Employees" Multiplicity="1" />
+          <End Role="Orders" Type="eBikeModel.Purchasing.Store.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeNumber" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="EmployeeNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PartsPartCategories_CategoryType">
+          <End Role="PartCategories" Type="eBikeModel.Purchasing.Store.PartCategories" Multiplicity="1" />
+          <End Role="Parts" Type="eBikeModel.Purchasing.Store.Parts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PartCategories">
+              <PropertyRef Name="CategoryType" />
+            </Principal>
+            <Dependent Role="Parts">
+              <PropertyRef Name="CategoryType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FX_EmployeesPositionCodes_PositionCode">
+          <End Role="PositionCodes" Type="eBikeModel.Purchasing.Store.PositionCodes" Multiplicity="0..1" />
+          <End Role="Employees" Type="eBikeModel.Purchasing.Store.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PositionCodes">
+              <PropertyRef Name="PositionCode" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="PositionCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_OrderDetailsParts_PartNumber">
+          <End Role="Parts" Type="eBikeModel.Purchasing.Store.Parts" Multiplicity="1" />
+          <End Role="OrderDetails" Type="eBikeModel.Purchasing.Store.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parts">
+              <PropertyRef Name="PartNumber" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="PartNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="CreateOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="orderdate" Type="datetime" Mode="In" />
+          <Parameter Name="gst" Type="money" Mode="In" />
+          <Parameter Name="total" Type="money" Mode="In" />
+          <Parameter Name="employeenumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CreateOrderDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ordernumber" Type="int" Mode="In" />
+          <Parameter Name="partnumber" Type="int" Mode="In" />
+          <Parameter Name="quantity" Type="int" Mode="In" />
+          <Parameter Name="purchaseprice" Type="smallmoney" Mode="In" />
+        </Function>
+        <Function Name="DeleteOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ordernumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteOrderDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ordernumber" Type="int" Mode="In" />
+          <Parameter Name="partnumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetOrderDetailforOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ordernumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetOutStandingOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetPartbyDescription" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="description" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetPartbyPartCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="categorytype" Type="char" Mode="In" />
+        </Function>
+        <Function Name="GetPartbyPartNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="partnumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetPartCategoryList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetSuggestedOrderList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="LookupPartforOrderingbyCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="categorytype" Type="char" Mode="In" />
+        </Function>
+        <Function Name="LookupPartforOrderingbyDescription" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="description" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="LookupPartforOrderingbyPartnumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="partnumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PlaceOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ordernumber" Type="int" Mode="In" />
+          <Parameter Name="employeenumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ReceiveOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ordernumber" Type="int" Mode="In" />
+          <Parameter Name="receivedate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="UpdateOrderDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ordernumber" Type="int" Mode="In" />
+          <Parameter Name="partnumber" Type="int" Mode="In" />
+          <Parameter Name="quantity" Type="int" Mode="In" />
+          <Parameter Name="purchaseprice" Type="smallmoney" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="eBikeModel.Purchasing" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="eBikeEntitiesPurchasing" p1:LazyLoadingEnabled="true" a:TypeAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+          <EntitySet Name="Employees" EntityType="eBikeModel.Purchasing.Employee" />
+          <EntitySet Name="IDGenerators" EntityType="eBikeModel.Purchasing.IDGenerator" />
+          <EntitySet Name="OrderDetails" EntityType="eBikeModel.Purchasing.OrderDetail" />
+          <EntitySet Name="Orders" EntityType="eBikeModel.Purchasing.Order" />
+          <EntitySet Name="PartCategories" EntityType="eBikeModel.Purchasing.PartCategory" />
+          <EntitySet Name="Parts" EntityType="eBikeModel.Purchasing.Part" />
+          <EntitySet Name="PositionCodes" EntityType="eBikeModel.Purchasing.PositionCode" />
+          <AssociationSet Name="FK_OrdersEmployees_EmployeeNumber" Association="eBikeModel.Purchasing.FK_OrdersEmployees_EmployeeNumber">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FX_EmployeesPositionCodes_PositionCode" Association="eBikeModel.Purchasing.FX_EmployeesPositionCodes_PositionCode">
+            <End Role="PositionCodes" EntitySet="PositionCodes" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetailsOrders_OrderNumber" Association="eBikeModel.Purchasing.FK_OrderDetailsOrders_OrderNumber">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="PK_OrderDetailsParts_PartNumber" Association="eBikeModel.Purchasing.PK_OrderDetailsParts_PartNumber">
+            <End Role="Parts" EntitySet="Parts" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PartsPartCategories_CategoryType" Association="eBikeModel.Purchasing.FK_PartsPartCategories_CategoryType">
+            <End Role="PartCategories" EntitySet="PartCategories" />
+            <End Role="Parts" EntitySet="Parts" />
+          </AssociationSet>
+          <FunctionImport Name="LookupPartforOrderingbyPartnumber" EntitySet="Parts" ReturnType="Collection(eBikeModel.Purchasing.Part)">
+            <Parameter Name="partnumber" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetSuggestedOrderList" EntitySet="Parts" ReturnType="Collection(eBikeModel.Purchasing.Part)" />
+          <FunctionImport Name="GetPartbyPartNumber" EntitySet="Parts" ReturnType="Collection(eBikeModel.Purchasing.Part)">
+            <Parameter Name="partnumber" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeNumber" />
+          </Key>
+          <Property Name="EmployeeNumber" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="SocialInsuranceNumber" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="Address" Type="String" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="City" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="Province" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="6" Unicode="false" FixedLength="true" />
+          <Property Name="HomePhone" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
+          <Property Name="WorkPhone" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
+          <Property Name="EmailAddress" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="PositionCode" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="Orders" Relationship="eBikeModel.Purchasing.FK_OrdersEmployees_EmployeeNumber" FromRole="Employees" ToRole="Orders" />
+          <NavigationProperty Name="PositionCode1" Relationship="eBikeModel.Purchasing.FX_EmployeesPositionCodes_PositionCode" FromRole="Employees" ToRole="PositionCodes" />
+        </EntityType>
+        <EntityType Name="IDGenerator">
+          <Key>
+            <PropertyRef Name="KeyField" />
+            <PropertyRef Name="LastValue" />
+          </Key>
+          <Property Name="KeyField" Type="String" Nullable="false" MaxLength="25" Unicode="false" FixedLength="true" />
+          <Property Name="LastValue" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="OrderNumber" />
+            <PropertyRef Name="PartNumber" />
+          </Key>
+          <Property Name="OrderNumber" Type="Int32" Nullable="false" />
+          <Property Name="PartNumber" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="PurchasePrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Order" Relationship="eBikeModel.Purchasing.FK_OrderDetailsOrders_OrderNumber" FromRole="OrderDetails" ToRole="Orders" />
+          <NavigationProperty Name="Part" Relationship="eBikeModel.Purchasing.PK_OrderDetailsParts_PartNumber" FromRole="OrderDetails" ToRole="Parts" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderNumber" />
+          </Key>
+          <Property Name="OrderNumber" Type="Int32" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="ReceiveDate" Type="DateTime" Precision="3" />
+          <Property Name="GST" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="EmployeeNumber" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="eBikeModel.Purchasing.FK_OrdersEmployees_EmployeeNumber" FromRole="Orders" ToRole="Employees" />
+          <NavigationProperty Name="OrderDetails" Relationship="eBikeModel.Purchasing.FK_OrderDetailsOrders_OrderNumber" FromRole="Orders" ToRole="OrderDetails" />
+        </EntityType>
+        <EntityType Name="PartCategory">
+          <Key>
+            <PropertyRef Name="CategoryType" />
+          </Key>
+          <Property Name="CategoryType" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Parts" Relationship="eBikeModel.Purchasing.FK_PartsPartCategories_CategoryType" FromRole="PartCategories" ToRole="Parts" />
+        </EntityType>
+        <EntityType Name="Part">
+          <Key>
+            <PropertyRef Name="PartNumber" />
+          </Key>
+          <Property Name="PartNumber" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="PurchasePrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="SellingPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="InStock" Type="Int32" Nullable="false" />
+          <Property Name="ReorderLevel" Type="Int32" Nullable="false" />
+          <Property Name="CategoryType" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="Refundable" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="OrderDetails" Relationship="eBikeModel.Purchasing.PK_OrderDetailsParts_PartNumber" FromRole="Parts" ToRole="OrderDetails" />
+          <NavigationProperty Name="PartCategory" Relationship="eBikeModel.Purchasing.FK_PartsPartCategories_CategoryType" FromRole="Parts" ToRole="PartCategories" />
+        </EntityType>
+        <EntityType Name="PositionCode">
+          <Key>
+            <PropertyRef Name="PositionCode1" />
+          </Key>
+          <Property Name="PositionCode1" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Employees" Relationship="eBikeModel.Purchasing.FX_EmployeesPositionCodes_PositionCode" FromRole="PositionCodes" ToRole="Employees" />
+        </EntityType>
+        <Association Name="FK_OrdersEmployees_EmployeeNumber">
+          <End Role="Employees" Type="eBikeModel.Purchasing.Employee" Multiplicity="1" />
+          <End Role="Orders" Type="eBikeModel.Purchasing.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeNumber" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="EmployeeNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FX_EmployeesPositionCodes_PositionCode">
+          <End Role="PositionCodes" Type="eBikeModel.Purchasing.PositionCode" Multiplicity="0..1" />
+          <End Role="Employees" Type="eBikeModel.Purchasing.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PositionCodes">
+              <PropertyRef Name="PositionCode1" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="PositionCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetailsOrders_OrderNumber">
+          <End Role="Orders" Type="eBikeModel.Purchasing.Order" Multiplicity="1" />
+          <End Role="OrderDetails" Type="eBikeModel.Purchasing.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderNumber" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_OrderDetailsParts_PartNumber">
+          <End Role="Parts" Type="eBikeModel.Purchasing.Part" Multiplicity="1" />
+          <End Role="OrderDetails" Type="eBikeModel.Purchasing.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parts">
+              <PropertyRef Name="PartNumber" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="PartNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PartsPartCategories_CategoryType">
+          <End Role="PartCategories" Type="eBikeModel.Purchasing.PartCategory" Multiplicity="1" />
+          <End Role="Parts" Type="eBikeModel.Purchasing.Part" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PartCategories">
+              <PropertyRef Name="CategoryType" />
+            </Principal>
+            <Dependent Role="Parts">
+              <PropertyRef Name="CategoryType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="ComplexGetSuggestedOrderList">
+          <Property Type="Int32" Name="partnumber" Nullable="false" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="40" />
+          <Property Type="Decimal" Name="purchaseprice" Nullable="false" Precision="19" />
+          <Property Type="Int32" Name="instock" Nullable="false" />
+          <Property Type="Int32" Name="OnOrder" Nullable="false" />
+          <Property Type="Int32" Name="reorderlevel" Nullable="false" />
+          <Property Type="Int32" Name="SOQ" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="eBikeModelPurchasingStoreContainer" CdmEntityContainer="eBikeEntitiesPurchasing">
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="eBikeModel.Purchasing.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+                <ScalarProperty Name="SocialInsuranceNumber" ColumnName="SocialInsuranceNumber" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+                <ScalarProperty Name="WorkPhone" ColumnName="WorkPhone" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="PositionCode" ColumnName="PositionCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IDGenerators">
+            <EntityTypeMapping TypeName="eBikeModel.Purchasing.IDGenerator">
+              <MappingFragment StoreEntitySet="IDGenerator">
+                <ScalarProperty Name="KeyField" ColumnName="KeyField" />
+                <ScalarProperty Name="LastValue" ColumnName="LastValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="eBikeModel.Purchasing.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetails">
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+                <ScalarProperty Name="PartNumber" ColumnName="PartNumber" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="eBikeModel.Purchasing.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="ReceiveDate" ColumnName="ReceiveDate" />
+                <ScalarProperty Name="GST" ColumnName="GST" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PartCategories">
+            <EntityTypeMapping TypeName="eBikeModel.Purchasing.PartCategory">
+              <MappingFragment StoreEntitySet="PartCategories">
+                <ScalarProperty Name="CategoryType" ColumnName="CategoryType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parts">
+            <EntityTypeMapping TypeName="eBikeModel.Purchasing.Part">
+              <MappingFragment StoreEntitySet="Parts">
+                <ScalarProperty Name="PartNumber" ColumnName="PartNumber" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+                <ScalarProperty Name="InStock" ColumnName="InStock" />
+                <ScalarProperty Name="ReorderLevel" ColumnName="ReorderLevel" />
+                <ScalarProperty Name="CategoryType" ColumnName="CategoryType" />
+                <ScalarProperty Name="Refundable" ColumnName="Refundable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PositionCodes">
+            <EntityTypeMapping TypeName="eBikeModel.Purchasing.PositionCode">
+              <MappingFragment StoreEntitySet="PositionCodes">
+                <ScalarProperty Name="PositionCode1" ColumnName="PositionCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="LookupPartforOrderingbyPartnumber" FunctionName="eBikeModel.Purchasing.Store.LookupPartforOrderingbyPartnumber" />
+          <FunctionImportMapping FunctionImportName="GetSuggestedOrderList" FunctionName="eBikeModel.Purchasing.Store.GetSuggestedOrderList" />
+          <FunctionImportMapping FunctionImportName="GetPartbyPartNumber" FunctionName="eBikeModel.Purchasing.Store.GetPartbyPartNumber" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
